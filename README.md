@@ -11,5 +11,5 @@ In your app.js (or elsewhere), call:
 For more information check out the `examples.js` file. Or browse around the `xhr.js` file. You can find in there support for GET, POST, PUT and DELETE (called destroy for reserved words problems)
 
 # About:
-Created by Raul Riera, @raulriera
+Created by Raul Riera, @raulriera  
 Contributions by Daniel Tamas, @dan_tamas
