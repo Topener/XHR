@@ -12,3 +12,4 @@ For more information check out the `examples.js` file. Or browse around the `xhr
 
 # About:
 Created by Raul Riera, @raulriera
+Contributions by Daniel Tamas, @dan_tamas
