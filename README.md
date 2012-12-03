@@ -6,7 +6,7 @@ In your app.js (or elsewhere), call:
 
     require("/lib/xhr");
     var xhr = new XHR();
-    xhr.get("http://google.com", onSuccessCallback, onErrorCallback, options);
+    xhr.get("http://freegeoip.net/json/", onSuccessCallback, onErrorCallback, options);
 
 For more information check out the `examples.js` file. Or browse around the `xhr.js` file. You can find in there support for GET, POST, PUT and DELETE (called destroy for reserved words problems)
 
