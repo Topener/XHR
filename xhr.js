@@ -71,7 +71,7 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 			// Check the status of this
 			result.status = "error";
 			result.data = e;
-		
+			result.code = xhr.status;
 			onError(result);
 		};
 
@@ -137,7 +137,7 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 		// Check the status of this		
 		result.status = "error";
 		result.data = e.error;
-		
+		result.code = xhr.status;
 		onError(result);
 	};
 	
@@ -190,7 +190,7 @@ XHR.prototype.put = function(url, data, onSuccess, onError, extraParams) {
 		// Check the status of this
 		result.status = "error";
 		result.data = e.error;
-		
+		result.code = xhr.status;
 		onError(result);
 	};
 	
@@ -242,7 +242,7 @@ XHR.prototype.destroy = function(url, onSuccess, onError, extraParams) {
 		// Check the status of this
 		result.status = "error";
 		result.data = e.error;
-		
+		result.code = xhr.status;
 		onError(result);
 	};
 	

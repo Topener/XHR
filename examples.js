@@ -1,4 +1,4 @@
-require("/lib/xhr");
+var XHR = require("/lib/xhr");
 var xhr = new XHR();
 
 // Normal plain old request without caching
