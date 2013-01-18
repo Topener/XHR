@@ -22,8 +22,7 @@ XHR = function(){
 // @extraParams (object) 
 XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 	// Debug
-	// Titanium.API.info(url);
-	
+
 	// Create some default params
 	var onSuccess = onSuccess || function(){};
 	var onError = onError || function(){};
@@ -33,9 +32,12 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
 	extraParams.contentType = extraParams.contentType || "application/json";
 		
+
+
 	var cache = readCache(url);
+	
 	// If there is nothing cached, send the request
-	if (!extraParams.ttl || cache == 0) {
+	if (!extraParams.ttl || !cache) {
 		
 		// Create the HTTP connection
 		var xhr = Titanium.Network.createHTTPClient({
@@ -58,8 +60,10 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 		xhr.onload = function() {
 			// Check the status of this
 			result.status = xhr.status == 200 ? "ok" : xhr.status;
-			result.data = xhr.responseText;
-		
+
+			// result.data = xhr.responseText;
+			result.data = xhr.responseData;
+
 			onSuccess(result);
 		
 			// Cache this response
@@ -96,7 +100,7 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 	
 	// Debug
-	Titanium.API.info(url + " " + JSON.stringify(data));
+	// Titanium.API.info(url + " " + JSON.stringify(data));
 	
 	// Create some default params
 	var onSuccess = onSuccess || function(){};
@@ -262,22 +266,24 @@ readCache = function(url) {
 	// Default the return value to false
 	var result = false;
 	
-	//Titanium.API.info("CHECKING CACHE");
+	// Titanium.API.info("CHECKING CACHE");
 	
 	// If the file was found
 	if (cache != 0) {
 		// Fetch a reference to the cache file
 		var file = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, cache.file);
 				
+				
+				
 		// Check that the TTL is further than the current date
-		if (cache.timestamp >= new Date().getTime()) {
-			//Titanium.API.info("CACHE FOUND");
+		if (cache.timestamp >= new Date().getTime() && file.exists()) {
+			// Titanium.API.info("CACHE FOUND");
 
 			// Return the content of the file
 			result = file.read();
 
 		} else {
-			//Titanium.API.info("OLD CACHE");
+			// Titanium.API.info("OLD CACHE");
 
 			// Delete the record and file
 			cacheManager(cache).remove();
@@ -286,7 +292,7 @@ readCache = function(url) {
 			cacheManager.save();		
 		}
 	} else {
-		//Titanium.API.info("NO CACHE FOUND");
+		// Titanium.API.info("NO CACHE FOUND");
 	}
 		
 	return result;
@@ -294,21 +300,18 @@ readCache = function(url) {
 
 writeCache = function(data, url, ttl) {
 		
-	//Titanium.API.info("WRITING CACHE");
+	// Titanium.API.info("WRITING CACHE");
 
 	// hash the url
 	var hashedURL = Titanium.Utils.md5HexDigest(url);
 		
 	// Write the file to the disk
 	var file = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, hashedURL);
+	file.write(data);
 	
-	// If the file was saved without any problems
-	if (file.write(data)) {
-		// Insert the cached object in the cache manager
-		cacheManager.insert( { "file": hashedURL, "timestamp": (new Date().getTime()) + (ttl*60*1000) });
-		cacheManager.save("cache");
-		//Titanium.API.info("WROTE CACHE");
-	}
+	cacheManager.insert( { "file": hashedURL, "timestamp": (new Date().getTime()) + (ttl*60*1000) });
+	cacheManager.save("cache");
+	// Titanium.API.info("WROTE CACHE");
 	
 };
 
