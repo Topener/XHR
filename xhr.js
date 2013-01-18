@@ -259,8 +259,8 @@ XHR.prototype.destroy = function(url, onSuccess, onError, extraParams) {
 
 readCache = function(url) {
 	// Hash the URL
-	var ext =/(?:\.([^.]+))?$/.exec(url)[1];
-	var hashedURL = Titanium.Utils.md5HexDigest(url) + (ext ? '.'+ext : '');
+	var ext =url.match(/[\w_.-]*?(?=[\?\#])|[\w_.-]*$/i)[0].replace(/[\w]+/i,'');	
+	var hashedURL = Titanium.Utils.md5HexDigest(url) + ext;
 	
 	// Check if the file exists in the manager (append the .dat extension?)
 	var cache = cacheManager( { "file": hashedURL } ).first();
@@ -304,8 +304,8 @@ writeCache = function(data, url, ttl) {
 	// Titanium.API.info("WRITING CACHE");
 
 	// hash the url
-	var ext =/(?:\.([^.]+))?$/.exec(url)[1];
-	var hashedURL = Titanium.Utils.md5HexDigest(url) + (ext ? '.'+ext : '');
+	var ext =url.match(/[\w_.-]*?(?=[\?\#])|[\w_.-]*$/i)[0].replace(/[\w]+/i,'');	
+	var hashedURL = Titanium.Utils.md5HexDigest(url) + ext;
 		
 	// Write the file to the disk
 	var file = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, hashedURL);
