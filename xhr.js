@@ -27,11 +27,7 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 	extraParams.contentType = extraParams.contentType || "application/json";
 	
 	
-	if (extraParams.headers) {
-		for (var h in headers) {
-			xhr.setRequestHeader(h,headers[h]);
-		};
-	};	
+	
 
 
 	var cache = readCache(url);
@@ -43,6 +39,14 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 		var xhr = Titanium.Network.createHTTPClient({
 			enableKeepAlive: false
 		});
+		
+		
+		if (extraParams.headers) {
+			for (var h in extraParams.headers) {
+				xhr.setRequestHeader(h,extraParams.headers[h]);
+			};
+		};
+		
 		// Create the result object
 		var result = {};
 	
@@ -110,11 +114,7 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
 	extraParams.contentType = extraParams.contentType || "application/json";
 	
-	if (extraParams.headers) {
-		for (var h in headers) {
-			xhr.setRequestHeader(h,headers[h]);
-		};
-	};	
+
 	
 	
 	
@@ -122,6 +122,15 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 	var xhr = Titanium.Network.createHTTPClient({
 		enableKeepAlive: false
 	});
+	
+	
+	
+	if (extraParams.headers) {
+		for (var h in extraParams.headers) {
+			xhr.setRequestHeader(h,extraParams.headers[h]);
+		};
+	};
+	
 	// Create the result object
 	var result = {};
 	
@@ -171,17 +180,22 @@ XHR.prototype.put = function(url, data, onSuccess, onError, extraParams) {
 	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
 	extraParams.contentType = extraParams.contentType || "application/json";
 	
-	if (extraParams.headers) {
-		for (var h in headers) {
-			xhr.setRequestHeader(h,headers[h]);
-		};
-	};	
+
 	
 	
 	// Create the HTTP connection
 	var xhr = Titanium.Network.createHTTPClient({
 		enableKeepAlive: false
 	});
+	
+	
+	if (extraParams.headers) {
+		for (var h in extraParams.headers) {
+			xhr.setRequestHeader(h,extraParams.headers[h]);
+		};
+	};
+	
+	
 	// Create the result object
 	var result = {};
 	
@@ -231,16 +245,19 @@ XHR.prototype.destroy = function(url, onSuccess, onError, extraParams) {
 	extraParams.contentType = extraParams.contentType || "application/json";
 	
 	
-	if (extraParams.headers) {
-		for (var h in headers) {
-			xhr.setRequestHeader(h,headers[h]);
-		};
-	};	
+
 	
 	// Create the HTTP connection
 	var xhr = Titanium.Network.createHTTPClient({
 		enableKeepAlive: false
 	});
+	
+	if (extraParams.headers) {
+		for (var h in extraParams.headers) {
+			xhr.setRequestHeader(h,extraParams.headers[h]);
+		};
+	};
+	
 	// Create the result object
 	var result = {};
 	
@@ -277,8 +294,6 @@ XHR.prototype.destroy = function(url, onSuccess, onError, extraParams) {
 
 
 
-
-
 // Private functions
 // =================
 
@@ -286,8 +301,8 @@ readCache = function(url) {
 	// Hash the URL
 	var ext =url.match(/[\w_.-]*?(?=[\?\#])|[\w_.-]*$/i)[0].replace(/[\w]+/i,'');	
 	var hashedURL = Titanium.Utils.md5HexDigest(url) + ext;
-	
 	// Check if the file exists in the manager (append the .dat extension?)
+
 	var cache = cacheManager( { "file": hashedURL } ).first();
 	// Default the return value to false
 	var result = false;
@@ -303,7 +318,7 @@ readCache = function(url) {
 				
 		// Check that the TTL is further than the current date
 		if (cache.timestamp >= new Date().getTime() && file.exists()) {
-			Titanium.API.info("CACHE FOUND");
+			// Titanium.API.info("CACHE FOUND");
 
 			// Return the content of the file
 			result = file.read();
@@ -329,14 +344,14 @@ writeCache = function(data, url, ttl) {
 	// Titanium.API.info("WRITING CACHE");
 
 	// hash the url
-	var ext =url.match(/[\w_.-]*?(?=[\?\#])|[\w_.-]*$/i)[0].replace(/[\w]+/i,'');	
+	var ext = url.match(/[\w_.-]*?(?=[\?\#])|[\w_.-]*$/i)[0].replace(/[\w]+/i,'');	
 	var hashedURL = Titanium.Utils.md5HexDigest(url) + ext;
 		
 	// Write the file to the disk
 	var file = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, hashedURL);
 	file.write(data);
 	
-	cacheManager.insert( { "file": hashedURL, "timestamp": (new Date().getTime()) + (ttl*60*1000) });
+	cacheManager.insert( { "file": hashedURL, "timestamp": parseInt(new Date().getTime()) + (ttl*60*1000) });
 	// cacheManager.save();
 	// Titanium.API.info("WROTE CACHE");
 	
