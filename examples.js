@@ -18,3 +18,8 @@ function onSuccessCallback(e) {
 function onErrorCallback(e) {
 	// Handle your errors in here
 };
+
+
+
+// set headers to the request
+xhr.get("http://freegeoip.net/json/", onSuccessCallback, onErrorCallback, { ttl: 5, headers:{'User-Agent':'My User Agent Header'} });
