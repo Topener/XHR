@@ -25,7 +25,13 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 	extraParams.ttl = extraParams.ttl || false; 
 	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
 	extraParams.contentType = extraParams.contentType || "application/json";
-		
+	
+	
+	if (extraParams.headers) {
+		for (var h in headers) {
+			xhr.setRequestHeader(h,headers[h]);
+		};
+	};	
 
 
 	var cache = readCache(url);
@@ -104,6 +110,14 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
 	extraParams.contentType = extraParams.contentType || "application/json";
 	
+	if (extraParams.headers) {
+		for (var h in headers) {
+			xhr.setRequestHeader(h,headers[h]);
+		};
+	};	
+	
+	
+	
 	// Create the HTTP connection
 	var xhr = Titanium.Network.createHTTPClient({
 		enableKeepAlive: false
@@ -157,6 +171,13 @@ XHR.prototype.put = function(url, data, onSuccess, onError, extraParams) {
 	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
 	extraParams.contentType = extraParams.contentType || "application/json";
 	
+	if (extraParams.headers) {
+		for (var h in headers) {
+			xhr.setRequestHeader(h,headers[h]);
+		};
+	};	
+	
+	
 	// Create the HTTP connection
 	var xhr = Titanium.Network.createHTTPClient({
 		enableKeepAlive: false
@@ -209,6 +230,13 @@ XHR.prototype.destroy = function(url, onSuccess, onError, extraParams) {
 	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
 	extraParams.contentType = extraParams.contentType || "application/json";
 	
+	
+	if (extraParams.headers) {
+		for (var h in headers) {
+			xhr.setRequestHeader(h,headers[h]);
+		};
+	};	
+	
 	// Create the HTTP connection
 	var xhr = Titanium.Network.createHTTPClient({
 		enableKeepAlive: false
@@ -248,6 +276,9 @@ XHR.prototype.destroy = function(url, onSuccess, onError, extraParams) {
 };
 
 
+
+
+
 // Private functions
 // =================
 
@@ -272,7 +303,7 @@ readCache = function(url) {
 				
 		// Check that the TTL is further than the current date
 		if (cache.timestamp >= new Date().getTime() && file.exists()) {
-			// Titanium.API.info("CACHE FOUND");
+			Titanium.API.info("CACHE FOUND");
 
 			// Return the content of the file
 			result = file.read();
