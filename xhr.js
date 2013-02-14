@@ -2,7 +2,7 @@
 Ti.taffy = require('/lib/taffydb4ti').taffy;
 
 // Create the cache manager (a shared object)
-var cacheManager = Ti.taffy('cache',{autocommit:true});
+var cacheManager = Ti.taffy('cache');
 
 XHR = function(){};
 
@@ -284,7 +284,7 @@ readCache = function(url) {
 			cacheManager(cache).remove();
 			file.deleteFile();	
 			
-			// cacheManager.save();		
+			cacheManager.save();		
 		}
 	} else {
 		// Titanium.API.info("NO CACHE FOUND");
@@ -306,7 +306,7 @@ writeCache = function(data, url, ttl) {
 	file.write(data);
 	
 	cacheManager.insert( { "file": hashedURL, "timestamp": (new Date().getTime()) + (ttl*60*1000) });
-	// cacheManager.save();
+	cacheManager.save();
 	// Titanium.API.info("WROTE CACHE");
 	
 };
@@ -327,7 +327,7 @@ XHR.prototype.clearCache = function() {
 			//Titanium.API.info("REMOVED CACHE FILE " + cachedDocuments[i].file);
 		}
 		
-		// cacheManager.save();
+		cacheManager.save();
 	}
 	
 	// Return the number of files deleted
