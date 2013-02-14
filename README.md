@@ -8,11 +8,6 @@ In your app.js (or elsewhere), call:
     var xhr = new XHR();
     xhr.get("http://freegeoip.net/json/", onSuccessCallback, onErrorCallback, options);
 
-If you need to clean up your cached documents you can call this function, and every document that is no longer "valid" (cache expired) will be deleted.
-
-    var XHR = require("/lib/xhr");
-    var xhr = new XHR().clearExpiredCache(); 
-
 For more information check out the [examples.js](https://github.com/raulriera/XHR/blob/master/examples.js) file. Or browse around the [xhr.js](https://github.com/raulriera/XHR/blob/master/xhr.js) file. You can find in there support for GET, POST, PUT and DELETE (called destroy for reserved words problems)
 
 # About:

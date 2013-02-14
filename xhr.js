@@ -357,7 +357,7 @@ writeCache = function(data, url, ttl) {
 	
 };
 
-XHR.prototype.clearExpiredCache = function() {
+XHR.prototype.clearCache = function() {
 	// Search for all timestamps lower than "right now"
 	var cachedDocuments = cacheManager({ "timestamp":{lte: new Date().getTime()}}).get();
 	var cachedDocumentsCount = cachedDocuments.length;
