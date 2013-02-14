@@ -1,10 +1,16 @@
 // Include the taffy library
-Ti.taffy = require('/lib/taffydb4ti').taffy;
+Ti.taffy = require('/lib/ti.taffydb').taffyDb;
 
 // Create the cache manager (a shared object)
-var cacheManager = Ti.taffy('cache');
+var cacheManager = Ti.taffy();
 
-XHR = function(){};
+XHR = function(){
+	// Init the DB
+	if (cacheManager.exists("cache")) {
+		cacheManager.open("cache");
+	}
+	
+};
 
 // Public functions
 // ================
@@ -306,7 +312,7 @@ writeCache = function(data, url, ttl) {
 	file.write(data);
 	
 	cacheManager.insert( { "file": hashedURL, "timestamp": (new Date().getTime()) + (ttl*60*1000) });
-	cacheManager.save();
+	cacheManager.save("cache");
 	// Titanium.API.info("WROTE CACHE");
 	
 };
