@@ -126,7 +126,7 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 	
 	
 	if (extraParams.headers) {
-		for (var h in extraParams.headers) {
+		for (var h in headers) {
 			xhr.setRequestHeader(h,extraParams.headers[h]);
 		};
 	};
@@ -190,7 +190,7 @@ XHR.prototype.put = function(url, data, onSuccess, onError, extraParams) {
 	
 	
 	if (extraParams.headers) {
-		for (var h in extraParams.headers) {
+		for (var h in headers) {
 			xhr.setRequestHeader(h,extraParams.headers[h]);
 		};
 	};
@@ -253,7 +253,7 @@ XHR.prototype.destroy = function(url, onSuccess, onError, extraParams) {
 	});
 	
 	if (extraParams.headers) {
-		for (var h in extraParams.headers) {
+		for (var h in headers) {
 			xhr.setRequestHeader(h,extraParams.headers[h]);
 		};
 	};
