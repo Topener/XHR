@@ -28,7 +28,7 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 	var onSuccess = onSuccess || function(){};
 	var onError = onError || function(){};
 	var extraParams = extraParams || {};
-	extraParams.async = extraParams.async || true;
+	extraParams.async = (extraParams.hasOwnProperty('async')) ? extraParams.async : true;
 	extraParams.ttl = extraParams.ttl || false; 
 	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
 	extraParams.contentType = extraParams.contentType || "application/json";
@@ -102,7 +102,7 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 	var onSuccess = onSuccess || function(){};
 	var onError = onError || function(){};
 	var extraParams = extraParams || {};
-	extraParams.async = extraParams.async || true;
+	extraParams.async = (extraParams.hasOwnProperty('async')) ? extraParams.async : true;
 	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
 	extraParams.contentType = extraParams.contentType || "application/json";
 	
@@ -155,7 +155,7 @@ XHR.prototype.put = function(url, data, onSuccess, onError, extraParams) {
 	var onSuccess = onSuccess || function(){};
 	var onError = onError || function(){};
 	var extraParams = extraParams || {};
-	extraParams.async = extraParams.async || true;
+	extraParams.async = (extraParams.hasOwnProperty('async')) ? extraParams.async : true;
 	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
 	extraParams.contentType = extraParams.contentType || "application/json";
 	
@@ -207,7 +207,7 @@ XHR.prototype.destroy = function(url, onSuccess, onError, extraParams) {
 	var onSuccess = onSuccess || function(){};
 	var onError = onError || function(){};
 	var extraParams = extraParams || {};
-	extraParams.async = extraParams.async || true;
+	extraParams.async = (extraParams.hasOwnProperty('async')) ? extraParams.async : true;
 	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
 	extraParams.contentType = extraParams.contentType || "application/json";
 	
