@@ -1,5 +1,5 @@
 # XHR:
-XHR is a wrapper around Titanium's HTTPClient. It works perfectly with REST API endpoints and has a built in cache system that you can use for your requests.
+XHR is a wrapper around Titanium's HTTPClient. It works perfectly with REST API endpoints and has a built in cache system that you can use for your requests. But it also can be use for any HTTP requests, you can even cache remote images.
 
 ## Usage:
 In your app.js (or elsewhere), call:
@@ -7,6 +7,13 @@ In your app.js (or elsewhere), call:
     var XHR = require("/xhr");
     var xhr = new XHR();
     xhr.get("http://freegeoip.net/json/", onSuccessCallback, onErrorCallback, options);
+
+A quick explanation of arguments of the last method in the previous block of code would look like this:
+
+* **url**: The URL where the API endpoint or content is located (required)
+* **successCallback**: Function to execute if the request succeeds (optional)
+* **errorCallback**: Function to execute if the request fails (optional)
+* **optioins**: Huge set of options for your request, please see the [examples.js](https://github.com/raulriera/XHR/blob/master/examples.js) file for more information. (optional)
 
 For more information check out the [examples.js](https://github.com/raulriera/XHR/blob/master/examples.js) file. Or browse around the [xhr.js](https://github.com/raulriera/XHR/blob/master/xhr.js) file. You can find in there support for GET, POST, PUT and DELETE (called destroy for reserved words problems)
 
