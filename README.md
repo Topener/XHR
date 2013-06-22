@@ -14,7 +14,7 @@ For more information check out the [examples.js](https://github.com/raulriera/XH
 Apart from the RESTful way of interacting with your API endpoints, this module also includes the following helper methods:
 
 ### clean()
-Goes through all the cached documents and delete everything that has been expired (if their TTL timespam is less than the current time)
+Goes through all the cached documents and delete everything that has been expired (if their TTL timestamp is less than the current time)
 
 This method returns the count of deleted documents
 
@@ -25,6 +25,7 @@ This method returns the count of deleted documents
 
 ## About:
 Created by Raul Riera, [@raulriera](http://twitter.com/raulriera)  
+
 Contributions by:
 
 * Daniel Tamas, [@dan_tamas](http://twitter.com/dan_tamas) 
