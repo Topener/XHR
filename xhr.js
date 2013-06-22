@@ -49,8 +49,16 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 		xhr.onload = function() {
 			// Check the status of this
 			result.status = xhr.status == 200 ? "ok" : xhr.status;
-			result.data = xhr.responseText;
-		
+			
+			// Check the type of content we should serve back to the user
+			if (extraParams.contentType.indexOf("application/json") != -1) {
+				result.data = xhr.responseText;
+			} else if (extraParams.contentType.indexOf("text/xml") != -1) {
+				result.data = xhr.responseXML;
+			} else {
+				result.data = xhr.responseData;
+			}
+						
 			onSuccess(result);
 		
 			// Cache this response
@@ -337,7 +345,7 @@ readCache = function(url) {
 			updateCacheManager();	
 		}
 	} else {
-		//Titanium.API.info("NO CACHE FOUND");
+		//Titanium.API.info("CACHE " + hashedURL + " NOT FOUND");
 	}
 		
 	return result;
@@ -357,15 +365,16 @@ writeCache = function(data, url, ttl) {
 	// Write the file to the disk
 	var file = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, hashedURL);
 	
-	// If the file was saved without any problems
-	if (file.write(data)) {
-		// Insert the cached object in the cache manager
-		cacheManager[hashedURL] = { "timestamp": (new Date().getTime()) + (ttl*60*1000) };
-		updateCacheManager();
-		
-		//Titanium.API.info("WROTE CACHE");
-	}
+	// Write the file to the disk
+	// TODO: There appears to be a bug in Titanium and makes the method
+	// below always return false when dealing with binary files
+	file.write(data);
 	
+	// Insert the cached object in the cache manager
+	cacheManager[hashedURL] = { "timestamp": (new Date().getTime()) + (ttl*60*1000) };
+	updateCacheManager();
+		
+	//Titanium.API.info("WROTE CACHE");	
 };
 
 
