@@ -9,7 +9,7 @@ xhr.get("http://freegeoip.net/json/", onSuccessCallback, onErrorCallback, { ttl:
 
 // Request a remote image with 60 mins caching
 // note that I am passing the contentType as an image, this tells the library to
-// response with binary content instead of text
+// respond with binary content instead of plain text
 xhr.get("http://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/500px-Apple_logo_black.svg.png", onImageSuccess, onErrorCallback, { ttl: 60, contentType: "image/png" });
 
 function onSuccessCallback(e) {

@@ -8,14 +8,14 @@ In your app.js (or elsewhere), call:
     var xhr = new XHR();
     xhr.get("http://freegeoip.net/json/", onSuccessCallback, onErrorCallback, options);
 
-A quick explanation of arguments of the last method in the previous block of code would look like this:
+A quick explanation of the arguments in the `get()` mehtod of the previous code would look like this:
 
 * **url**: The URL where the API endpoint or content is located (required)
-* **successCallback**: Function to execute if the request succeeds (optional)
+* **successCallback**: Function to execute if the request succeeds (required)
 * **errorCallback**: Function to execute if the request fails (optional)
 * **optioins**: Huge set of options for your request, please see the [examples.js](https://github.com/raulriera/XHR/blob/master/examples.js) file for more information. (optional)
 
-For more information check out the [examples.js](https://github.com/raulriera/XHR/blob/master/examples.js) file. Or browse around the [xhr.js](https://github.com/raulriera/XHR/blob/master/xhr.js) file. You can find in there support for GET, POST, PUT and DELETE (called destroy for reserved words problems)
+For more information please check out the [examples.js](https://github.com/raulriera/XHR/blob/master/examples.js) file. Or browse around the [xhr.js](https://github.com/raulriera/XHR/blob/master/xhr.js) file. You can find in there support for GET, POST, PUT and DELETE (called destroy for reserved words problems)
 
 ## Helpers
 Apart from the RESTful way of interacting with your API endpoints, this module also includes the following helper methods:
@@ -26,7 +26,7 @@ Goes through all the cached documents and delete everything that has been expire
 This method returns the count of deleted documents
 
 ### purge()
-Goes through all the documents and delete everything
+Goes through all the documents and deletes everything
 
 This method returns the count of deleted documents
 
