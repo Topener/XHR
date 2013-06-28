@@ -20,7 +20,10 @@ For more information please check out the [examples.js](https://github.com/raulr
 ## Helpers
 Apart from the RESTful way of interacting with your API endpoints, this module also includes the following helper methods:
 
-### clear(*url*)
+### clear(url)
+
+* **url**: (required) The URL you want removed from the cache manager
+
 Finds the cached document of the given url (if any) and removes it from the cache manager. This method is useful if you are not satisfied with the results you got at the time.
 
 ### clean()
