@@ -35,4 +35,4 @@ xhr.clear("http://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_b
 xhr.clean();
 
 // Delete all cached documents (expired or not, be very careful using this method)
-xhr.purge()l
+xhr.purge();
