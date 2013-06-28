@@ -27,3 +27,12 @@ function onImageSuccess(e) {
 function onErrorCallback(e) {
 	// Handle your errors in here
 };
+
+// Delete cached image file
+xhr.clear("http://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/500px-Apple_logo_black.svg.png");
+
+// Delete all expired documents (this method should be called at least once in your app)
+xhr.clean();
+
+// Delete all cached documents (expired or not, be very careful using this method)
+xhr.purge()l

@@ -13,7 +13,7 @@ XHR = function(){};
 // @extraParams (object) 
 XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 	// Debug
-	// Titanium.API.info(url);
+	Titanium.API.info(url);
 	
 	// Create some default params
 	var onSuccess = onSuccess || function(){};
@@ -201,6 +201,9 @@ XHR.prototype.put = function(url, data, onSuccess, onError, extraParams) {
 // @onError (function) error callback
 // @extraParams (object)
 XHR.prototype.destroy = function(url, onSuccess, onError, extraParams) {
+	// Debug
+	Titanium.API.info(url);
+	
 	// Create some default params
 	var onSuccess = onSuccess || function(){};
 	var onError = onError || function(){};
@@ -249,6 +252,32 @@ XHR.prototype.destroy = function(url, onSuccess, onError, extraParams) {
 
 // Helper functions
 // =================
+
+// Removes the cached content of a given URL (this is useful if you are not satisfied with the data returned that time)
+XHR.prototype.clear = function(url) {
+		
+	if (url) {
+		// Hash the URL
+		var hashedURL = Titanium.Utils.md5HexDigest(url);
+		// Check if the file exists in the manager
+		var cache = cacheManager[hashedURL];
+		
+		// If the file was found
+		if (cache) {
+			// Delete references and file
+			var file = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, hashedURL);
+			// Delete the record and file
+			delete cacheManager[hashedURL];
+			file.deleteFile();	
+			
+			// Update the cache manager
+			updateCacheManager();
+			
+			//Titanium.API.info("REMOVED CACHE FILE " + hashedURL);
+		}
+	} 
+	
+};
 
 // Removes all the expired documents from the manager and the file system
 XHR.prototype.clean = function() {
@@ -315,7 +344,7 @@ readCache = function(url) {
 	// Hash the URL
 	var hashedURL = Titanium.Utils.md5HexDigest(url);
 	
-	// Check if the file exists in the manager (append the .dat extension?)
+	// Check if the file exists in the manager
 	var cache = cacheManager[hashedURL];
 	// Default the return value to false
 	var result = false;
@@ -376,7 +405,6 @@ writeCache = function(data, url, ttl) {
 		
 	//Titanium.API.info("WROTE CACHE");	
 };
-
 
 // Return everything
 module.exports = XHR;
