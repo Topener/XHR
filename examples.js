@@ -17,7 +17,7 @@ function onSuccessCallback(e) {
 	// the module will return an object with two properties
 	// data (the actual data retuned
 	// status ('ok' for normal requests and 'cache' for requests cached
-	Titanium.API.info(JSON.parse(e));
+	Titanium.API.info(JSON.parse(e)); // should it be JSON.parse(e.data) ?
 };
 
 function onImageSuccess(e) {
