@@ -4,9 +4,11 @@ XHR is a wrapper around Titanium's HTTPClient. It works perfectly with REST API 
 ## Usage:
 In your app.js (or elsewhere), call:
 
-    var XHR = require("/xhr");
-    var xhr = new XHR();
-    xhr.get("http://freegeoip.net/json/", onSuccessCallback, onErrorCallback, options);
+```javascript
+var XHR = require("/xhr");
+var xhr = new XHR();
+xhr.get("http://freegeoip.net/json/", onSuccessCallback, onErrorCallback, options);
+```
 
 A quick explanation of the arguments in the `get()` mehtod of the previous code would look like this:
 
