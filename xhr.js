@@ -140,7 +140,7 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 	};
 	
 	if (extraParams.contentType === "application/json") {
-		data = JSON.stringify(data)
+		data = JSON.stringify(data);
 	};
 	xhr.send(data);
 };
