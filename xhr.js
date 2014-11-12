@@ -139,7 +139,7 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 		onError(result);
 	};
 	
-	xhr.send(data);
+	xhr.send(JSON.stringify(data));
 };
 
 // PUT requests
