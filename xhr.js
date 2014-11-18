@@ -49,7 +49,6 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 		// Additional header keys
 		if (extraParams.header) {
 			for (key in extraParams.header){
-				console.log(key+": "+extraParams.header[key]);
 				xhr.setRequestHeader(key, extraParams.header[key]);				
 			}
 		}
@@ -61,7 +60,7 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 			
 			// Check the type of content we should serve back to the user
 			if (extraParams.contentType.indexOf("application/json") != -1) {
-				result.data = xhr.responseText;
+				result.data = JSON.parse(xhr.responseText);
 			} else if (extraParams.contentType.indexOf("text/xml") != -1) {
 				result.data = xhr.responseXML;
 			} else {
@@ -134,8 +133,16 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 	xhr.onload = function() {
 		// Check the status of this
 		result.status = xhr.status == 200 ? "ok" : xhr.status;
-		result.data = xhr.responseText;
 		
+		// Check the type of content we should serve back to the user
+		if (extraParams.contentType.indexOf("application/json") != -1) {
+			result.data = JSON.parse(xhr.responseText);
+		} else if (extraParams.contentType.indexOf("text/xml") != -1) {
+			result.data = xhr.responseXML;
+		} else {
+			result.data = xhr.responseData;
+		}
+					
 		onSuccess(result);
 	};
 	
@@ -190,7 +197,14 @@ XHR.prototype.put = function(url, data, onSuccess, onError, extraParams) {
 	xhr.onload = function() {
 		// Check the status of this
 		result.status = xhr.status == 200 ? "ok" : xhr.status;
-		result.data = xhr.responseText;
+		// Check the type of content we should serve back to the user
+		if (extraParams.contentType.indexOf("application/json") != -1) {
+			result.data = JSON.parse(xhr.responseText);
+		} else if (extraParams.contentType.indexOf("text/xml") != -1) {
+			result.data = xhr.responseXML;
+		} else {
+			result.data = xhr.responseData;
+		}
 		
 		onSuccess(result);
 	};
