@@ -111,6 +111,7 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 	extraParams.async = (extraParams.hasOwnProperty('async')) ? extraParams.async : true;
 	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
 	extraParams.contentType = extraParams.contentType || "application/json";
+	extraParams.header = extraParams.header || false;
 	
 	// Create the HTTP connection
 	var xhr = Titanium.Network.createHTTPClient({
@@ -127,6 +128,13 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 	if (extraParams.shouldAuthenticate) {
 		var authstr = 'Basic ' + Titanium.Utils.base64encode(extraParams.username + ':' + extraParams.password); 
 		xhr.setRequestHeader('Authorization', authstr);
+	}
+	
+	// Additional header keys
+	if (extraParams.header) {
+		for (key in extraParams.header){
+			xhr.setRequestHeader(key, extraParams.header[key]);				
+		}
 	}
 	
 	// When the connection was successful
