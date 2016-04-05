@@ -21,7 +21,7 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 	var extraParams = extraParams || {};
 	extraParams.async = (extraParams.hasOwnProperty('async')) ? extraParams.async : true;
 	extraParams.ttl = extraParams.ttl || false; 
-	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
+	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well or an oAuthToken
 	extraParams.contentType = extraParams.contentType || "application/json";
 		
 	var cache = readCache(url);
@@ -41,7 +41,11 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 
 		// If we need to authenticate
 		if (extraParams.shouldAuthenticate) {
-			var authstr = 'Basic ' + Titanium.Utils.base64encode(extraParams.username + ':' + extraParams.password); 
+			if (extraParams.oAuthToken){
+				var authstr = 'Bearer ' + extraParams.oAuthToken;
+			} else {
+				var authstr = 'Basic ' + Titanium.Utils.base64encode(extraParams.username + ':' + extraParams.password); 
+			}
 			xhr.setRequestHeader('Authorization', authstr);
 		}
 	
@@ -101,7 +105,7 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 	var onError = onError || function(){};
 	var extraParams = extraParams || {};
 	extraParams.async = (extraParams.hasOwnProperty('async')) ? extraParams.async : true;
-	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
+	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well or an oAuthToken
 	extraParams.contentType = extraParams.contentType || "application/json";
 	
 	// Create the HTTP connection
@@ -117,7 +121,11 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 	
 	// If we need to authenticate
 	if (extraParams.shouldAuthenticate) {
-		var authstr = 'Basic ' + Titanium.Utils.base64encode(extraParams.username + ':' + extraParams.password); 
+		if (extraParams.oAuthToken){
+			var authstr = 'Bearer ' + extraParams.oAuthToken;
+		} else {
+			var authstr = 'Basic ' + Titanium.Utils.base64encode(extraParams.username + ':' + extraParams.password); 
+		}
 		xhr.setRequestHeader('Authorization', authstr);
 	}
 	
@@ -154,7 +162,7 @@ XHR.prototype.put = function(url, data, onSuccess, onError, extraParams) {
 	var onError = onError || function(){};
 	var extraParams = extraParams || {};
 	extraParams.async = (extraParams.hasOwnProperty('async')) ? extraParams.async : true;
-	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
+	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well or an oAuthToken
 	extraParams.contentType = extraParams.contentType || "application/json";
 	
 	// Create the HTTP connection
@@ -170,7 +178,11 @@ XHR.prototype.put = function(url, data, onSuccess, onError, extraParams) {
 	
 	// If we need to authenticate
 	if (extraParams.shouldAuthenticate) {
-		var authstr = 'Basic ' + Titanium.Utils.base64encode(extraParams.username + ':' + extraParams.password); 
+		if (extraParams.oAuthToken){
+			var authstr = 'Bearer ' + extraParams.oAuthToken;
+		} else {
+			var authstr = 'Basic ' + Titanium.Utils.base64encode(extraParams.username + ':' + extraParams.password); 
+		}
 		xhr.setRequestHeader('Authorization', authstr);
 	}
 	
@@ -209,7 +221,7 @@ XHR.prototype.destroy = function(url, onSuccess, onError, extraParams) {
 	var onError = onError || function(){};
 	var extraParams = extraParams || {};
 	extraParams.async = (extraParams.hasOwnProperty('async')) ? extraParams.async : true;
-	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well
+	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well or an oAuthToken
 	extraParams.contentType = extraParams.contentType || "application/json";
 	
 	// Create the HTTP connection
@@ -225,7 +237,11 @@ XHR.prototype.destroy = function(url, onSuccess, onError, extraParams) {
 	
 	// If we need to authenticate
 	if (extraParams.shouldAuthenticate) {
-		var authstr = 'Basic ' + Titanium.Utils.base64encode(extraParams.username + ':' + extraParams.password); 
+		if (extraParams.oAuthToken){
+			var authstr = 'Bearer ' + extraParams.oAuthToken;
+		} else {
+			var authstr = 'Basic ' + Titanium.Utils.base64encode(extraParams.username + ':' + extraParams.password); 
+		}
 		xhr.setRequestHeader('Authorization', authstr);
 	}
 	
