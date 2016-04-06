@@ -23,6 +23,7 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 	extraParams.ttl = extraParams.ttl || false; 
 	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well or an oAuthToken
 	extraParams.contentType = extraParams.contentType || "application/json";
+	extraParams.header = extraParams.header || false;
 		
 	var cache = readCache(url);
 	// If there is nothing cached, send the request
@@ -48,6 +49,13 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 			}
 			xhr.setRequestHeader('Authorization', authstr);
 		}
+		
+		// Additional header keys
+		if (extraParams.header) {
+			for (key in extraParams.header){
+				xhr.setRequestHeader(key, extraParams.header[key]);				
+			}
+		}
 	
 		// When the connection was successful
 		xhr.onload = function() {
@@ -56,7 +64,7 @@ XHR.prototype.get = function(url, onSuccess, onError, extraParams) {
 			
 			// Check the type of content we should serve back to the user
 			if (extraParams.contentType.indexOf("application/json") != -1) {
-				result.data = xhr.responseText;
+				result.data = JSON.parse(xhr.responseText);
 			} else if (extraParams.contentType.indexOf("text/xml") != -1) {
 				result.data = xhr.responseXML;
 			} else {
@@ -107,6 +115,7 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 	extraParams.async = (extraParams.hasOwnProperty('async')) ? extraParams.async : true;
 	extraParams.shouldAuthenticate = extraParams.shouldAuthenticate || false; // if you set this to true, pass "username" and "password" as well or an oAuthToken
 	extraParams.contentType = extraParams.contentType || "application/json";
+	extraParams.header = extraParams.header || false;
 	
 	// Create the HTTP connection
 	var xhr = Titanium.Network.createHTTPClient({
@@ -129,12 +138,27 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 		xhr.setRequestHeader('Authorization', authstr);
 	}
 	
+	// Additional header keys
+	if (extraParams.header) {
+		for (key in extraParams.header){
+			xhr.setRequestHeader(key, extraParams.header[key]);				
+		}
+	}
+	
 	// When the connection was successful
 	xhr.onload = function() {
 		// Check the status of this
 		result.status = xhr.status == 200 ? "ok" : xhr.status;
-		result.data = xhr.responseText;
 		
+		// Check the type of content we should serve back to the user
+		if (extraParams.contentType.indexOf("application/json") != -1) {
+			result.data = JSON.parse(xhr.responseText);
+		} else if (extraParams.contentType.indexOf("text/xml") != -1) {
+			result.data = xhr.responseXML;
+		} else {
+			result.data = xhr.responseData;
+		}
+					
 		onSuccess(result);
 	};
 	
@@ -147,6 +171,9 @@ XHR.prototype.post = function(url, data, onSuccess, onError, extraParams) {
 		onError(result);
 	};
 	
+	if (extraParams.contentType === "application/json") {
+		data = JSON.stringify(data);
+	};
 	xhr.send(data);
 };
 
@@ -190,7 +217,14 @@ XHR.prototype.put = function(url, data, onSuccess, onError, extraParams) {
 	xhr.onload = function() {
 		// Check the status of this
 		result.status = xhr.status == 200 ? "ok" : xhr.status;
-		result.data = xhr.responseText;
+		// Check the type of content we should serve back to the user
+		if (extraParams.contentType.indexOf("application/json") != -1) {
+			result.data = JSON.parse(xhr.responseText);
+		} else if (extraParams.contentType.indexOf("text/xml") != -1) {
+			result.data = xhr.responseXML;
+		} else {
+			result.data = xhr.responseData;
+		}
 		
 		onSuccess(result);
 	};
