@@ -43,6 +43,7 @@ Created by Raul Riera, [@raulriera](http://twitter.com/raulriera)
 
 Contributions by:
 
-* Daniel Tamas, [@dan_tamas](http://twitter.com/dan_tamas) 
-* Bob Sims, [@2wheelsburning](http://twitter.com/2wheelsburning) 
+* Daniel Tamas, [@dan_tamas](https://twitter.com/dan_tamas) 
+* Bob Sims, [@2wheelsburning](https://twitter.com/2wheelsburning) 
 * Mark Ross [@rossman66](https://github.com/rossman66)
+* Rene Pot, [@Wraldpyk](https://twitter.com/wraldpyk) 
