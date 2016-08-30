@@ -5,17 +5,45 @@ XHR is a wrapper around Titanium's HTTPClient. It works perfectly with REST API 
 In your app.js (or elsewhere), call:
 
 ```javascript
-var XHR = require("/xhr");
+//init xhr.js
+var XHR = require("xhr"); 
 var xhr = new XHR();
-xhr.GET("http://freegeoip.net/json/", onSuccessCallback, onErrorCallback, options);
 ```
 
-A quick explanation of the arguments in the `get()` mehtod of the previous code would look like this:
+GET and DELETE calls share the same structure
+```javascript
+xhr.GET("http://freegeoip.net/json/", onSuccessCallback, onErrorCallback, options);
+xhr.DELETE("http://freegeoip.net/json/", onSuccessCallback, onErrorCallback, options);
+```
 
-* **url**: (required) The URL where the API endpoint or content is located 
-* **successCallback**: (required) Function to execute if the request succeeds 
-* **errorCallback**: (optional) Function to execute if the request fails 
-* **options**: (optional) Huge set of options for your request, please see the [examples.js](https://github.com/raulriera/XHR/blob/master/examples.js) file for more information.
+ POST and PUT also share structure, only 1 added field as opposed to GET/DELETE
+```javascript
+xhr.POST("http://freegeoip.net/json/", data, onSuccessCallback, onErrorCallback, options);
+xhr.PUT("http://freegeoip.net/json/", data, onSuccessCallback, onErrorCallback, options);
+```
+
+## Options
+
+In the 4 API call methods you can set options, but doing this every time might be a bit frustrating. Especially if you want authentication for every API call. (or other options). You can set it globally like this
+
+```javascript
+xhr.setStaticOptions(options);
+```
+
+If you do specify options in an API call, it will not ignore global options. This might be useful if all but 1 API call should be authenticated for example.
+
+### Available Options
+
+* `async` (default `true`) - If an API call should be async or not
+* `ttl` (default `false`) - Seconds the API response should be cached (only works with `GET()`
+* `shouldAuthenticate` (default `false`) - Should the call be made with authentication? BASIC Auth & oAuth supported
+* `oAuthToken` - oAuth token. Only works if `shouldAuthenticate` is `true`
+* `username` - Username for BASIC authentication. Only works if `shouldAuthenticate` is `true` and `oAuthToken` is not set
+* `password` - Password for BASIC authentication. See `username`
+* `contentType` (default `application/json`)- contentType for API call.
+* `parseJSON` (default `false`) - Should provided data for `POST()` and `PUT()` be stringified and response (for all methods) be parsed.
+* `returnXML` (default `false`) - Do you expect XML returned, put this to `true`
+* `debug` (default `false`) - Do you want `Ti.API.info` to show API calls made
 
 For more information please check out the [examples.js](https://github.com/raulriera/XHR/blob/master/examples.js) file. Or browse around the [xhr.js](https://github.com/raulriera/XHR/blob/master/xhr.js) file. You can find in there support for GET, POST, PUT and DELETE (called destroy for reserved words problems)
 
