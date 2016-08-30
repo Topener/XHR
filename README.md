@@ -45,7 +45,7 @@ If you do specify options in an API call, it will not ignore global options. Thi
 * `returnXML` (default `false`) - Do you expect XML returned, put this to `true`
 * `debug` (default `false`) - Do you want `Ti.API.info` to show API calls made
 
-For more information please check out the [examples.js](https://github.com/raulriera/XHR/blob/master/examples.js) file. Or browse around the [xhr.js](https://github.com/raulriera/XHR/blob/master/xhr.js) file. You can find in there support for GET, POST, PUT and DELETE (called destroy for reserved words problems)
+For some examples please check out the [examples.js](https://github.com/raulriera/XHR/blob/master/examples.js) file. Or browse around the [xhr.js](https://github.com/raulriera/XHR/blob/master/xhr.js) file. You can find in there support for GET, POST, PUT and DELETE
 
 ## Helpers
 Apart from the RESTful way of interacting with your API endpoints, this module also includes the following helper methods:
