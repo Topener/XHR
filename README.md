@@ -66,6 +66,9 @@ Goes through all the documents and deletes everything
 
 This method returns the count of deleted documents
 
+## Backwards Compatibility
+Previously `get`, `post`, `put` and `destroy` methods were used. They still work but are deprecated.
+
 ## About:
 Created by Raul Riera, [@raulriera](http://twitter.com/raulriera)  
 
