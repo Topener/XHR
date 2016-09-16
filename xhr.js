@@ -1,6 +1,6 @@
 // Create the cache manager (a shared object)
 var cacheManager = Ti.App.Properties.getObject("cachedXHRDocuments", {});
-var storedExtraParams = Ti.App.Properties.getObject("extraXHRParams", addDefaultsToOptions({}));
+var storedExtraParams = addDefaultsToOptions({});
 
 XHR = function() {};
 
@@ -249,7 +249,6 @@ XHR.prototype.purge = function() {
 
 XHR.prototype.setStaticOptions = function(params) {
     var params = addDefaultsToOptions(params);
-    Ti.App.Properties.setObject("extraXHRParams", params);
     storedExtraParams = params;
 
 };
