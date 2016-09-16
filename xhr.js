@@ -1,11 +1,13 @@
 // Create the cache manager (a shared object)
 var cacheManager = Ti.App.Properties.getObject("cachedXHRDocuments", {});
-var storedExtraParams = Ti.App.Properties.getObject("extraXHRParams", addDefaultsToOptions({}));
+var storedExtraParams = addDefaultsToOptions({});
 
 XHR = function() {};
 
 // Public functions
 // ================
+
+
 
 // GET
 // @url (string) URL to fetch
@@ -43,7 +45,7 @@ XHR.prototype.GET = function(url, onSuccess, onError, extraParams) {
 
         // When there was an error
         xhr.onerror = function(e) {
-            onError(handleError(xhr, e));
+            onError(handleError(xhr));
         };
 
         xhr.send();
@@ -88,7 +90,7 @@ XHR.prototype.POST = function(url, data, onSuccess, onError, extraParams) {
     // When there was an error
     xhr.onerror = function(e) {
         // Check the status of this
-        onError(handleError(xhr, e));
+        onError(handleError(xhr));
     };
 
     xhr.send(extraParams.parseJSON ? JSON.stringify(data) : data);
@@ -122,7 +124,7 @@ XHR.prototype.PUT = function(url, data, onSuccess, onError, extraParams) {
     // When there was an error
     xhr.onerror = function(e) {
         // Check the status of this
-        onError(handleError(xhr, e));
+        onError(handleError(xhr));
     };
 
     xhr.send(extraParams.parseJSON ? JSON.stringify(data) : data);
@@ -155,7 +157,7 @@ XHR.prototype.DELETE = function(url, onSuccess, onError, extraParams) {
     // When there was an error
     xhr.onerror = function(e) {
         // Check the status of this
-        onError(handleError(xhr, e));
+        onError(handleError(xhr));
     };
 
     xhr.send();
@@ -249,9 +251,7 @@ XHR.prototype.purge = function() {
 
 XHR.prototype.setStaticOptions = function(params) {
     var params = addDefaultsToOptions(params);
-    Ti.App.Properties.setObject("extraXHRParams", params);
     storedExtraParams = params;
-
 };
 
 // Private Helper Functions
@@ -293,11 +293,11 @@ function handleSuccess(xhr, extraParams) {
 }
 
 // Return a standardized response
-function handleError(xhr, error) {
+function handleError(xhr) {
     var result = {};
     result.result = "error";
     result.status = xhr.status;
-    result.error = error.error;
+    result.error = e.error;
     result.data = xhr.responseData;
     return result;
 }
