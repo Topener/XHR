@@ -7,8 +7,6 @@ XHR = function() {};
 // Public functions
 // ================
 
-
-
 // GET
 // @url (string) URL to fetch
 // @onSuccess (function) success callback
@@ -45,7 +43,7 @@ XHR.prototype.GET = function(url, onSuccess, onError, extraParams) {
 
         // When there was an error
         xhr.onerror = function(e) {
-            onError(handleError(xhr));
+            onError(handleError(xhr, e));
         };
 
         xhr.send();
@@ -90,7 +88,7 @@ XHR.prototype.POST = function(url, data, onSuccess, onError, extraParams) {
     // When there was an error
     xhr.onerror = function(e) {
         // Check the status of this
-        onError(handleError(xhr));
+        onError(handleError(xhr, e));
     };
 
     xhr.send(extraParams.parseJSON ? JSON.stringify(data) : data);
@@ -124,7 +122,7 @@ XHR.prototype.PUT = function(url, data, onSuccess, onError, extraParams) {
     // When there was an error
     xhr.onerror = function(e) {
         // Check the status of this
-        onError(handleError(xhr));
+        onError(handleError(xhr, e));
     };
 
     xhr.send(extraParams.parseJSON ? JSON.stringify(data) : data);
@@ -157,7 +155,7 @@ XHR.prototype.DELETE = function(url, onSuccess, onError, extraParams) {
     // When there was an error
     xhr.onerror = function(e) {
         // Check the status of this
-        onError(handleError(xhr));
+        onError(handleError(xhr, e));
     };
 
     xhr.send();
@@ -252,6 +250,7 @@ XHR.prototype.purge = function() {
 XHR.prototype.setStaticOptions = function(params) {
     var params = addDefaultsToOptions(params);
     storedExtraParams = params;
+
 };
 
 // Private Helper Functions
@@ -293,11 +292,11 @@ function handleSuccess(xhr, extraParams) {
 }
 
 // Return a standardized response
-function handleError(xhr) {
+function handleError(xhr, error) {
     var result = {};
     result.result = "error";
     result.status = xhr.status;
-    result.error = e.error;
+    result.error = error.error;
     result.data = xhr.responseData;
     return result;
 }
