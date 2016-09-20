@@ -249,6 +249,7 @@ XHR.prototype.purge = function() {
 
 XHR.prototype.setStaticOptions = function(params) {
     var params = addDefaultsToOptions(params);
+    Ti.App.Properties.setObject("extraXHRParams", params);
     storedExtraParams = params;
 
 };
@@ -264,6 +265,7 @@ function addDefaultsToOptions(providedParams) {
     extraParams.parseJSON = (extraParams.hasOwnProperty('parseJSON')) ? extraParams.parseJSON : false;
     extraParams.returnXML = (extraParams.hasOwnProperty('returnXML')) ? extraParams.returnXML : false;
     extraParams.debug = (extraParams.hasOwnProperty('debug')) ? extraParams.debug : false;
+    extraParams.requestHeaders = providedParams.requestHeaders || [];
     return extraParams;
 }
 
@@ -310,6 +312,13 @@ function initXHRRequest(method, url, extraParams) {
     // Open the HTTP connection
     xhr.open(method, url, extraParams.async);
     xhr.setRequestHeader('Content-Type', extraParams.contentType);
+
+    // add extra provided request headers
+    if (extraParams.requestHeaders && extraParams.requestHeaders.length > 0){
+        for (var i = 0; i < extraParams.requestHeaders.length; i++) {
+            xhr.setRequestHeader(extraParams.requestHeaders[i].key, extraParams.requestHeaders[i].value);
+        }
+    }
 
     if (extraParams.debug) {
         Ti.API.info(method + ': ' + url);

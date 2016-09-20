@@ -6,7 +6,7 @@ In your app.js (or elsewhere), call:
 
 ```javascript
 //init xhr.js
-var XHR = require("xhr"); 
+var XHR = require("xhr");
 var xhr = new XHR();
 ```
 
@@ -44,8 +44,29 @@ If you do specify options in an API call, it will not ignore global options. Thi
 * `parseJSON` (default `false`) - Should provided data for `POST()` and `PUT()` be stringified and response (for all methods) be parsed.
 * `returnXML` (default `false`) - Do you expect XML returned, put this to `true`
 * `debug` (default `false`) - Do you want `Ti.API.info` to show API calls made
+* `requestHeaders` (default `[]`) - Add custom request headers to the request
 
 For some examples please check out the [examples.js](https://github.com/raulriera/XHR/blob/master/examples.js) file. Or browse around the [xhr.js](https://github.com/raulriera/XHR/blob/master/xhr.js) file. You can find in there support for GET, POST, PUT and DELETE
+
+### requestHeaders property
+To add extra, custom, requestHeaders to the http request, you can set an array like this:
+
+```javascript
+    xhr.setStaticOptions({
+        requestHeaders: [
+            {
+                key: 'myCustomId',
+                value: 'myCustomValue'
+            }
+        ],
+        debug: true
+    });
+```
+
+This will set the requestHeader like you would do previously:
+```js
+    xhr.setRequestHeader('myCustomId', 'myCustomValue');
+```
 
 ## Helpers
 Apart from the RESTful way of interacting with your API endpoints, this module also includes the following helper methods:
@@ -74,7 +95,7 @@ Created by Raul Riera, [@raulriera](http://twitter.com/raulriera)
 
 Contributions by:
 
-* Daniel Tamas, [@dan_tamas](https://twitter.com/dan_tamas) 
-* Bob Sims, [@2wheelsburning](https://twitter.com/2wheelsburning) 
+* Daniel Tamas, [@dan_tamas](https://twitter.com/dan_tamas)
+* Bob Sims, [@2wheelsburning](https://twitter.com/2wheelsburning)
 * Mark Ross [@rossman66](https://github.com/rossman66)
-* Rene Pot, [@Wraldpyk](https://twitter.com/wraldpyk) 
+* Rene Pot, [@Wraldpyk](https://twitter.com/wraldpyk)
