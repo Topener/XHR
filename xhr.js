@@ -299,7 +299,17 @@ function handleError(xhr, error) {
     result.result = "error";
     result.status = xhr.status;
     result.error = error.error;
-    result.data = xhr.responseData;
+    
+    // Parse error result body
+    try {
+        if (extraParams.returnXML && xhr.responseXML) {
+            result.data = xhr.responseXML;
+        } else {
+            result.data = extraParams.parseJSON ? JSON.parse(xhr.responseText) : xhr.responseText;
+        }
+    } catch(e) {
+        result.data = xhr.responseData;
+    }
     return result;
 }
 
