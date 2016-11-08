@@ -274,6 +274,7 @@ function handleSuccess(xhr, extraParams) {
     var result = {};
     result.result = "success";
     result.status = xhr.status;
+    result.ETag = xhr.getResponseHeader('ETag');
 
     /**
      * Check if the response is XML, if not try to parse JSON (if that was requested)
