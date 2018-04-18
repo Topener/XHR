@@ -1,9 +1,9 @@
 {
   "name": "XHR.js",
   "description": "Super awesome HTTP Client for Appcelerator Titanium",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "XHR.js",
-  "keywords": ["xhr","http"],
+  "keywords": ["xhr","http","titanium","titanium-module"],
   "author": "Raul Riera & Rene Pot",
   "repository": {
     "type": "git",
