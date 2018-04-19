@@ -8,27 +8,24 @@ XHR = function() {};
 // ================
 
 // GET
-// @url (string) URL to fetch
-// @onSuccess (function) success callback
-// @onError (function) error callback
-// @extraParams (object)
-XHR.prototype.GET = function(url, onSuccess, onError, extraParams) {
+// @e (object) url is required field. supports onSucces, onError and extraParams. 
+XHR.prototype.GET = function(e) {
     // Create some default params
-    var onSuccess = onSuccess || function() {};
-    var onError = onError || function() {};
-
-    if (extraParams) {
-        var extraParams = addDefaultsToOptions(extraParams);
+    var onSuccess = e.onSuccess || function() {};
+    var onError = e.onError || function() {};
+    
+    if (e.extraParams) {
+        var extraParams = addDefaultsToOptions(e.xtraParams);
     } else {
         var extraParams = storedExtraParams;
     }
 
-    var cache = readCache(url);
+    var cache = readCache(e.url);
 
     // If there is nothing cached, send the request
     if (cache === false || !extraParams.ttl) {
 
-        var xhr = initXHRRequest('GET', url, extraParams);
+        var xhr = initXHRRequest('GET', e.url, extraParams);
 
         // When the connection was successful
         xhr.onload = function() {
@@ -37,13 +34,13 @@ XHR.prototype.GET = function(url, onSuccess, onError, extraParams) {
 
             // only cache if there is a ttl
             if (extraParams.ttl) {
-                writeCache(result.data, url, extraParams.ttl);
+                writeCache(result.data, e.url, extraParams.ttl);
             }
         };
 
         // When there was an error
-        xhr.onerror = function(e) {
-            onError(handleError(xhr, e));
+        xhr.onerror = function(err) {
+            onError(handleError(xhr, err));
         };
 
         xhr.send();
@@ -61,24 +58,20 @@ XHR.prototype.GET = function(url, onSuccess, onError, extraParams) {
 };
 
 // POST requests
-// @url (string) URL to fetch
-// @data (object)
-// @onSuccess (function) success callback
-// @onError (function) error callback
-// @extraParams (object)
-XHR.prototype.POST = function(url, data, onSuccess, onError, extraParams) {
+// @e (object) url & data are required, supports onSuccess, onError and extraParams
+XHR.prototype.POST = function(e) {
 
     // Create some default params
-    var onSuccess = onSuccess || function() {};
-    var onError = onError || function() {};
+    var onSuccess = e.onSuccess || function() {};
+    var onError = e.onError || function() {};
 
-    if (extraParams) {
-        var extraParams = addDefaultsToOptions(extraParams);
+    if (e.extraParams) {
+        var extraParams = addDefaultsToOptions(e.extraParams);
     } else {
         var extraParams = storedExtraParams;
     }
 
-    var xhr = initXHRRequest('POST', url, extraParams);
+    var xhr = initXHRRequest('POST', e.url, extraParams);
 
     // When the connection was successful
     xhr.onload = function() {
@@ -86,33 +79,29 @@ XHR.prototype.POST = function(url, data, onSuccess, onError, extraParams) {
     };
 
     // When there was an error
-    xhr.onerror = function(e) {
+    xhr.onerror = function(err) {
         // Check the status of this
-        onError(handleError(xhr, e));
+        onError(handleError(xhr, err));
     };
 
-    xhr.send(extraParams.parseJSON ? JSON.stringify(data) : data);
+    xhr.send(extraParams.parseJSON ? JSON.stringify(e.data) : e.data);
 };
 
 // PUT requests
-// @url (string) URL to fetch
-// @data (object)
-// @onSuccess (function) success callback
-// @onError (function) error callback
-// @extraParams (object)
-XHR.prototype.PUT = function(url, data, onSuccess, onError, extraParams) {
+// @e (object) url & data are required, supports onSuccess, onError and extraParams
+XHR.prototype.PUT = function(e) {
 
     // Create some default params
-    var onSuccess = onSuccess || function() {};
-    var onError = onError || function() {};
+    var onSuccess = e.onSuccess || function() {};
+    var onError = e.onError || function() {};
 
-    if (extraParams) {
-        var extraParams = addDefaultsToOptions(extraParams);
+    if (e.extraParams) {
+        var extraParams = addDefaultsToOptions(e.extraParams);
     } else {
         var extraParams = storedExtraParams;
     }
 
-    var xhr = initXHRRequest('PUT', url, extraParams);
+    var xhr = initXHRRequest('PUT', e.url, extraParams);
 
     // When the connection was successful
     xhr.onload = function() {
@@ -120,32 +109,29 @@ XHR.prototype.PUT = function(url, data, onSuccess, onError, extraParams) {
     };
 
     // When there was an error
-    xhr.onerror = function(e) {
+    xhr.onerror = function(err) {
         // Check the status of this
-        onError(handleError(xhr, e));
+        onError(handleError(xhr, err));
     };
 
-    xhr.send(extraParams.parseJSON ? JSON.stringify(data) : data);
+    xhr.send(extraParams.parseJSON ? JSON.stringify(e.data) : e.data);
 };
 
-// DELETE requests
-// @url (string) URL to fetch
-// @onSuccess (function) success callback
-// @onError (function) error callback
-// @extraParams (object)
-XHR.prototype.DELETE = function(url, onSuccess, onError, extraParams) {
+// PATCH requests
+// @e (object) url & data are required, supports onSuccess, onError and extraParams
+XHR.prototype.PATCH = function(e) {
 
     // Create some default params
-    var onSuccess = onSuccess || function() {};
-    var onError = onError || function() {};
+    var onSuccess = e.onSuccess || function() {};
+    var onError = e.onError || function() {};
 
-    if (extraParams) {
-        var extraParams = addDefaultsToOptions(extraParams);
+    if (e.extraParams) {
+        var extraParams = addDefaultsToOptions(e.extraParams);
     } else {
         var extraParams = storedExtraParams;
     }
 
-    var xhr = initXHRRequest('DELETE', url, extraParams);
+    var xhr = initXHRRequest('PATCH', e.url, extraParams);
 
     // When the connection was successful
     xhr.onload = function() {
@@ -153,19 +139,42 @@ XHR.prototype.DELETE = function(url, onSuccess, onError, extraParams) {
     };
 
     // When there was an error
-    xhr.onerror = function(e) {
+    xhr.onerror = function(err) {
         // Check the status of this
-        onError(handleError(xhr, e));
+        onError(handleError(xhr, err));
+    };
+
+    xhr.send(extraParams.parseJSON ? JSON.stringify(e.data) : e.data);
+};
+
+// @e (object) url is required, supports onSuccess, onError and extraParams
+XHR.prototype.DELETE = function(e) {
+
+    // Create some default params
+    var onSuccess = e.onSuccess || function() {};
+    var onError = e.onError || function() {};
+
+    if (extraParams) {
+        var extraParams = addDefaultsToOptions(extraParams);
+    } else {
+        var extraParams = storedExtraParams;
+    }
+
+    var xhr = initXHRRequest('DELETE', e.url, extraParams);
+
+    // When the connection was successful
+    xhr.onload = function() {
+        onSuccess(handleSuccess(xhr, extraParams));
+    };
+
+    // When there was an error
+    xhr.onerror = function(err) {
+        // Check the status of this
+        onError(handleError(xhr, err));
     };
 
     xhr.send();
 };
-
-// backward compatibilty
-XHR.prototype.get = XHR.prototype.GET;
-XHR.prototype.post = XHR.prototype.POST;
-XHR.prototype.put = XHR.prototype.PUT;
-XHR.prototype.destroy = XHR.prototype.DELETE;
 
 // Helper functions
 // =================

@@ -1,0 +1,10 @@
+version: 3.0.0
+description: Super awesome HTTP Client for Appcelerator Titanium
+author: Rene Pot
+license: Apache 2.0
+copyright: Copyright © 2018 Rene Pot
+name: ti.xhr
+moduleid: ti.xhr
+guid: 451f87e4-b287-4561-a362-92cce74d72c9
+platform: commonjs
+minsdk: 6.0.0.GA
