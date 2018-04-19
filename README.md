@@ -1,25 +1,38 @@
 # XHR:
 XHR is a wrapper around Titanium's HTTPClient. It works perfectly with REST API endpoints and has a built in cache system that you can use for your requests. But it also can be use for any HTTP requests, you can even cache remote images.
 
+<aside class="warning">
+Version 3.0.0 is incompatible with any previous version. Only slight refactor is needed to make the method arguments a single object instead.
+</aside>
+
 ## Usage:
 In your app.js (or elsewhere), call:
 
 ```javascript
 //init xhr.js
-var XHR = require("xhr");
-var xhr = new XHR();
+var xhr = new(require("xhr"))();
 ```
 
-GET and DELETE calls share the same structure
+All methods share the same structure, though with `PUT`, `POST` and `PATCH` require both the `url` and the `data` properties. `GET` and `DELETE` require just the `url` property, `data` is not supported.
 ```javascript
-xhr.GET("http://freegeoip.net/json/", onSuccessCallback, onErrorCallback, options);
-xhr.DELETE("http://freegeoip.net/json/", onSuccessCallback, onErrorCallback, options);
-```
 
- POST and PUT also share structure, only 1 added field as opposed to GET/DELETE
-```javascript
-xhr.POST("http://freegeoip.net/json/", data, onSuccessCallback, onErrorCallback, options);
-xhr.PUT("http://freegeoip.net/json/", data, onSuccessCallback, onErrorCallback, options);
+// structure for DELETE looks the same as for GET
+xhr.GET({
+    url: 'http://freegeoip.net/json/',
+    onSuccess: onSuccessCallback,
+    onError: onErrorCallback,
+    extraParams: options
+})
+
+
+// structure for PUT and PATCH is the same as for POST
+xhr.POST({
+    url: 'http://freegeoip.net/json/',
+    data: myData,
+    onSuccess: onSuccessCallback,
+    onError: onErrorCallback,
+    extraParams: options
+})
 ```
 
 ## Options
@@ -46,7 +59,7 @@ If you do specify options in an API call, it will not ignore global options. Thi
 * `debug` (default `false`) - Do you want `Ti.API.info` to show API calls made
 * `requestHeaders` (default `[]`) - Add custom request headers to the request
 
-For some examples please check out the [examples.js](https://github.com/raulriera/XHR/blob/master/examples.js) file. Or browse around the [xhr.js](https://github.com/raulriera/XHR/blob/master/xhr.js) file. You can find in there support for GET, POST, PUT and DELETE
+For some examples please check out the [examples.js](https://github.com/topener/XHR/blob/master/examples.js) file. Or browse around the [xhr.js](https://github.com/topener/XHR/blob/master/xhr.js) file. You can find in there support for GET, POST, PUT, PATCH and DELETE
 
 ### requestHeaders property
 To add extra, custom, requestHeaders to the http request, you can set an array like this:
@@ -91,11 +104,13 @@ This method returns the count of deleted documents
 Previously `get`, `post`, `put` and `destroy` methods were used. They still work but are deprecated.
 
 ## About:
-Created by Raul Riera, [@raulriera](http://twitter.com/raulriera)  
+Created by Rene Pot, [@Wraldpyk](https://twitter.com/wraldpyk)
 
 Contributions by:
+
+* Original creator: Raul Riera, [@raulriera](http://twitter.com/raulriera)
 
 * Daniel Tamas, [@dan_tamas](https://twitter.com/dan_tamas)
 * Bob Sims, [@2wheelsburning](https://twitter.com/2wheelsburning)
 * Mark Ross [@rossman66](https://github.com/rossman66)
-* Rene Pot, [@Wraldpyk](https://twitter.com/wraldpyk)
+

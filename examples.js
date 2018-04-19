@@ -1,16 +1,29 @@
-var XHR = require("/xhr");
-var xhr = new XHR();
+var XHR = new (require("/xhr"))();
 
 // Normal plain old request without caching
-xhr.GET("http://freegeoip.net/json/", onSuccessCallback, onErrorCallback);
+xhr.GET({
+	url: "http://freegeoip.net/json/", 
+	onSuccess: onSuccessCallback, 
+	onError: onErrorCallback
+});
 
 // Normal plain old request with a 5mins caching
-xhr.GET("http://freegeoip.net/json/", onSuccessCallback, onErrorCallback, { ttl: 5 });
+xhr.GET({
+	url: "http://freegeoip.net/json/", 
+	onSuccess: onSuccessCallback, 
+	onError: onErrorCallback, 
+	extraParams: { ttl: 5 }
+});
 
 // Request a remote image with 60 mins caching
 // note that I am passing the contentType as an image, this tells the library to
 // respond with binary content instead of plain text
-xhr.GET("http://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/500px-Apple_logo_black.svg.png", onImageSuccess, onErrorCallback, { ttl: 60, contentType: "image/png" });
+xhr.GET({
+	url: "http://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/500px-Apple_logo_black.svg.png", 
+	onSuccess: onImageSuccess, 
+	onError: onErrorCallback, 
+	extraParams: { ttl: 60, contentType: "image/png" }
+});
 
 function onSuccessCallback(e) {
 	// Handle your request in here
