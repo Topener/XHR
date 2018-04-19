@@ -22,8 +22,9 @@ xhr.GET({
     onSuccess: onSuccessCallback,
     onError: onErrorCallback,
     extraParams: options
-})
+});
 
+xhr.DELETE({});
 
 // structure for PUT and PATCH is the same as for POST
 xhr.POST({
@@ -33,6 +34,9 @@ xhr.POST({
     onError: onErrorCallback,
     extraParams: options
 })
+
+xhr.PUT({});
+xhr.PATCH({});
 ```
 
 ## Options
