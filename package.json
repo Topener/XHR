@@ -1,7 +1,7 @@
 {
   "name": "ti.xhr",
   "description": "Super awesome HTTP Client for Appcelerator Titanium",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "license": "MIT",
   "main": "ti.xhr.js",
   "keywords": ["xhr","http","titanium","titanium-module"],
