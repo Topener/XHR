@@ -1,4 +1,4 @@
-var XHR = new (require("ti.xhr"))();
+var xhr = new (require("ti.xhr"))();
 
 // Normal plain old request without caching
 xhr.GET({

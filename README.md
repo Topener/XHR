@@ -1,15 +1,15 @@
-# XHR:
-XHR is a wrapper around Titanium's HTTPClient. It works perfectly with REST API endpoints and has a built in cache system that you can use for your requests. But it also can be use for any HTTP requests, you can even cache remote images.
+# ti.xhr:
+ti.xhr is a wrapper around Titanium's HTTPClient. It works perfectly with REST API endpoints and has a built in cache system that you can use for your requests. But it also can be use for any HTTP requests, you can even cache remote images.
 
-<aside class="warning">
+```
 Version 3.0.0 is incompatible with any previous version. Only slight refactor is needed to make the method arguments a single object instead.
-</aside>
+```
 
 ## Usage:
-In your app.js (or elsewhere), call:
+In your alloy.js (or elsewhere), call:
 
 ```javascript
-//init xhr.js
+//include ti.xhr
 var xhr = new(require("ti.xhr"))();
 ```
 
