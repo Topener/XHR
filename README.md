@@ -1,9 +1,9 @@
 # ti.xhr:
 ti.xhr is a wrapper around Titanium's HTTPClient. It works perfectly with REST API endpoints and has a built in cache system that you can use for your requests. But it also can be use for any HTTP requests, you can even cache remote images.
 
-```
-Version 3.0.0 is incompatible with any previous version. Only slight refactor is needed to make the method arguments a single object instead.
-```
+
+> Version 3.0.0 is incompatible with any previous version. Only slight refactor is needed to make the method arguments a single object instead.
+
 
 ## Usage:
 In your alloy.js (or elsewhere), call:
