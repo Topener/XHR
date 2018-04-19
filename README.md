@@ -37,7 +37,7 @@ xhr.POST({
 
 ## Options
 
-In the 4 API call methods you can set options, but doing this every time might be a bit frustrating. Especially if you want authentication for every API call. (or other options). You can set it globally like this
+In the 5 API call methods you can set options, but doing this every time might be a bit frustrating. Especially if you want authentication for every API call. (or other options). You can set it globally like this
 
 ```javascript
 xhr.setStaticOptions(options);
