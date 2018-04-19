@@ -10,7 +10,7 @@ In your app.js (or elsewhere), call:
 
 ```javascript
 //init xhr.js
-var xhr = new(require("xhr"))();
+var xhr = new(require("ti.xhr"))();
 ```
 
 All methods share the same structure, though with `PUT`, `POST` and `PATCH` require both the `url` and the `data` properties. `GET` and `DELETE` require just the `url` property, `data` is not supported.
