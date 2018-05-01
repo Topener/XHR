@@ -5,6 +5,16 @@ ti.xhr is a wrapper around Titanium's HTTPClient. It works perfectly with REST A
 > Version 3.0.0 is incompatible with any previous version. Only slight refactor is needed to make the method arguments a single object instead.
 
 
+## Installation.
+Use NPM to install ti.xhr.
+
+Run this command in your `lib` folder (Alloy) or `Resources` folder (classic).
+```
+npm i ti.xhr
+```
+
+Or install it by download the latest release from the `dist` folder and unpackage it in your root directory.
+
 ## Usage:
 In your alloy.js (or elsewhere), call:
 
