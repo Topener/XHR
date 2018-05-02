@@ -15,7 +15,7 @@ XHR.prototype.GET = function(e) {
     var onError = e.onError || function() {};
     
     if (e.extraParams) {
-        var extraParams = addDefaultsToOptions(e.xtraParams);
+        var extraParams = addDefaultsToOptions(e.extraParams);
     } else {
         var extraParams = storedExtraParams;
     }
