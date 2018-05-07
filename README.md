@@ -62,7 +62,7 @@ If you do specify options in an API call, it will not ignore global options. Thi
 ### Available Options
 
 * `async` (default `true`) - If an API call should be async or not
-* `ttl` (default `false`) - Seconds the API response should be cached (only works with `GET()`
+* `ttl` (default `false`) - Minutes the API response should be cached (only works with `GET()`)
 * `shouldAuthenticate` (default `false`) - Should the call be made with authentication? BASIC Auth & oAuth supported
 * `oAuthToken` - oAuth token. Only works if `shouldAuthenticate` is `true`
 * `username` - Username for BASIC authentication. Only works if `shouldAuthenticate` is `true` and `oAuthToken` is not set
@@ -73,7 +73,7 @@ If you do specify options in an API call, it will not ignore global options. Thi
 * `debug` (default `false`) - Do you want `Ti.API.info` to show API calls made
 * `requestHeaders` (default `[]`) - Add custom request headers to the request
 
-For some examples please check out the [examples.js](https://github.com/topener/XHR/blob/master/examples.js) file. Or browse around the [xhr.js](https://github.com/topener/XHR/blob/master/xhr.js) file. You can find in there support for GET, POST, PUT, PATCH and DELETE
+For some examples please check out the [examples.js](https://github.com/topener/XHR/blob/master/examples.js) file. Or browse around the [ti.xhr.js](https://github.com/topener/XHR/blob/master/ti.xhr.js) file. You can find in there support for GET, POST, PUT, PATCH and DELETE
 
 ### requestHeaders property
 To add extra, custom, requestHeaders to the http request, you can set an array like this:
@@ -127,4 +127,3 @@ Contributions by:
 * Daniel Tamas, [@dan_tamas](https://twitter.com/dan_tamas)
 * Bob Sims, [@2wheelsburning](https://twitter.com/2wheelsburning)
 * Mark Ross [@rossman66](https://github.com/rossman66)
-
