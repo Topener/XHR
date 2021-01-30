@@ -273,6 +273,7 @@ function addDefaultsToOptions(providedParams) {
     extraParams.contentType = extraParams.contentType || "application/json";
     extraParams.parseJSON = (extraParams.hasOwnProperty('parseJSON')) ? extraParams.parseJSON : false;
     extraParams.returnXML = (extraParams.hasOwnProperty('returnXML')) ? extraParams.returnXML : false;
+    extraParams.expectingImage = (extraParams.hasOwnProperty('expectingImage')) ? extraParams.expectingImage : false;
     extraParams.debug = (extraParams.hasOwnProperty('debug')) ? extraParams.debug : false;
     extraParams.requestHeaders = providedParams.requestHeaders || [];
     return extraParams;
@@ -292,6 +293,8 @@ function handleSuccess(xhr, extraParams) {
     try {
         if (extraParams.returnXML && xhr.responseXML) {
             result.data = xhr.responseXML;
+        } else if (extraParams.expectingImage) {
+            result.data = xhr.responseData;
         } else {
             result.data = extraParams.parseJSON ? JSON.parse(xhr.responseText) : xhr.responseText;
         }
