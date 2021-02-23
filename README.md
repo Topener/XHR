@@ -1,20 +1,12 @@
 # ti.xhr:
 ti.xhr is a wrapper around Titanium's HTTPClient. It works perfectly with REST API endpoints and has a built in cache system that you can use for your requests. But it also can be use for any HTTP requests, you can even cache remote images.
-
-
-> Version 3.0.0 is incompatible with any previous version. Only slight refactor is needed to make the method arguments a single object instead.
-
-
 ## Installation.
 Use NPM to install ti.xhr.
 
-Run this command in your `lib` folder (Alloy) or `Resources` folder (classic).
+Run this command in your `lib` folder (Alloy) or `Resources` folder (classic) or in the root directory of your app when using Webpack.
 ```
 npm i ti.xhr
 ```
-
-Or install it by download the latest release from the `dist` folder and unpackage it in your root directory.
-
 ## Usage:
 In your alloy.js (or elsewhere), call:
 
@@ -72,6 +64,7 @@ If you do specify options in an API call, it will not ignore global options. Thi
 * `returnXML` (default `false`) - Do you expect XML returned, put this to `true`
 * `debug` (default `false`) - Do you want `Ti.API.info` to show API calls made
 * `requestHeaders` (default `[]`) - Add custom request headers to the request
+* `promise` (default `false`) - Returns a Promise when `true`
 
 For some examples please check out the [examples.js](https://github.com/topener/XHR/blob/master/examples.js) file. Or browse around the [ti.xhr.js](https://github.com/topener/XHR/blob/master/ti.xhr.js) file. You can find in there support for GET, POST, PUT, PATCH and DELETE
 
@@ -94,6 +87,25 @@ This will set the requestHeader like you would do previously:
 ```js
     xhr.setRequestHeader('myCustomId', 'myCustomValue');
 ```
+
+## Promises
+If you want to use promises you can set the `promise` property, best would be to use the `setStaticOptions` method for that so you never have to configure it again.
+
+```javascript
+    xhr.setStaticOptions({
+        promise: true
+    });
+```
+Then every call returns a promise, which you can handle using `await` or `then` as with all promises.
+
+```javascript
+    await result = xhr.GET({});
+
+    xhr.GET({}).then(result => {
+
+    });
+```
+Promises work with all supported methods. Don't forget to add error handling. 
 
 ## Helpers
 Apart from the RESTful way of interacting with your API endpoints, this module also includes the following helper methods:

@@ -1,11 +1,11 @@
 {
   "name": "ti.xhr",
   "description": "Super awesome HTTP Client for Appcelerator Titanium",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "license": "MIT",
   "main": "ti.xhr.js",
   "keywords": ["xhr","http","titanium","titanium-module"],
-  "author": "Rene Pot & Raul Riera",
+  "author": "Rene Pot",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Topener/XHR.git"
