@@ -8,12 +8,12 @@ XHR = function() {};
 // ================
 
 // GET
-// @e (object) url is required field. supports onSucces, onError and extraParams. 
+// @e (object) url is required field. supports onSucces, onError and extraParams.
 XHR.prototype.GET = function(e) {
     // Create some default params
     var onSuccess = e.onSuccess || function() {};
     var onError = e.onError || function() {};
-    
+
     if (e.extraParams) {
         var extraParams = addDefaultsToOptions(e.extraParams);
     } else {
@@ -40,7 +40,7 @@ XHR.prototype.GET = function(e) {
 
         // When there was an error
         xhr.onerror = function(err) {
-            onError(handleError(xhr, err));
+            onError(handleError(xhr, err, extraParams));
         };
 
         xhr.send();
@@ -81,7 +81,8 @@ XHR.prototype.POST = function(e) {
     // When there was an error
     xhr.onerror = function(err) {
         // Check the status of this
-        onError(handleError(xhr, err));
+        Ti.API.info('Ti.XHR :: 84');
+        onError(handleError(xhr, err, extraParams));
     };
 
     xhr.send(extraParams.parseJSON ? JSON.stringify(e.data) : e.data);
@@ -111,7 +112,7 @@ XHR.prototype.PUT = function(e) {
     // When there was an error
     xhr.onerror = function(err) {
         // Check the status of this
-        onError(handleError(xhr, err));
+        onError(handleError(xhr, err, extraParams));
     };
 
     xhr.send(extraParams.parseJSON ? JSON.stringify(e.data) : e.data);
@@ -141,7 +142,7 @@ XHR.prototype.PATCH = function(e) {
     // When there was an error
     xhr.onerror = function(err) {
         // Check the status of this
-        onError(handleError(xhr, err));
+        onError(handleError(xhr, err, extraParams));
     };
 
     xhr.send(extraParams.parseJSON ? JSON.stringify(e.data) : e.data);
@@ -170,7 +171,7 @@ XHR.prototype.DELETE = function(e) {
     // When there was an error
     xhr.onerror = function(err) {
         // Check the status of this
-        onError(handleError(xhr, err));
+        onError(handleError(xhr, err, extraParams));
     };
 
     xhr.send();
@@ -296,9 +297,9 @@ function handleSuccess(xhr, extraParams) {
         } else if (extraParams.expectingFile) {
             result.data = xhr.responseData;
         } else {
-            result.data = extraParams.parseJSON ? JSON.parse(xhr.responseText) : xhr.responseText;
+            result.data = (extraParams.parseJSON) ? JSON.parse(xhr.responseText) : xhr.responseText;
         }
-    } catch(e) {
+    } catch (e) {
         result.data = xhr.responseData;
     }
 
@@ -306,20 +307,23 @@ function handleSuccess(xhr, extraParams) {
 }
 
 // Return a standardized response
-function handleError(xhr, error) {
+function handleError(xhr, error, extraParams) {
     var result = {};
     result.result = "error";
     result.status = xhr.status;
     result.error = error.error;
-    
+
+    Ti.API.info('Ti.XHR :: 317 :: extraParams.parseJSON:', extraParams.parseJSON);
     // Parse error result body
     try {
         if (extraParams.returnXML && xhr.responseXML) {
             result.data = xhr.responseXML;
         } else {
-            result.data = extraParams.parseJSON ? JSON.parse(xhr.responseText) : xhr.responseText;
+            Ti.API.info('Ti.XHR :: 322');
+            result.data = (extraParams.parseJSON) ? JSON.parse(xhr.responseText) : xhr.responseText;
         }
-    } catch(e) {
+    } catch (e) {
+        Ti.API.info('Ti.XHR :: 326');
         result.data = xhr.responseData;
     }
     return result;
@@ -328,7 +332,7 @@ function handleError(xhr, error) {
 function initXHRRequest(method, url, extraParams) {
     // Create the HTTP connection
     var xhr = Titanium.Network.createHTTPClient({
-        enableKeepAlive : false
+        enableKeepAlive: false
     });
 
     // Open the HTTP connection
@@ -336,7 +340,7 @@ function initXHRRequest(method, url, extraParams) {
     xhr.setRequestHeader('Content-Type', extraParams.contentType);
 
     // add extra provided request headers
-    if (extraParams.requestHeaders && extraParams.requestHeaders.length > 0){
+    if (extraParams.requestHeaders && extraParams.requestHeaders.length > 0) {
         for (var i = 0; i < extraParams.requestHeaders.length; i++) {
             xhr.setRequestHeader(extraParams.requestHeaders[i].key, extraParams.requestHeaders[i].value);
         }
@@ -421,7 +425,7 @@ function writeCache(data, url, ttl) {
 
     // Insert the cached object in the cache manager
     cacheManager[hashedURL] = {
-        "timestamp" : (new Date().getTime()) + (ttl * 60 * 1000)
+        "timestamp": (new Date().getTime()) + (ttl * 60 * 1000)
     };
     updateCacheManager();
 
@@ -429,4 +433,4 @@ function writeCache(data, url, ttl) {
 };
 
 // Return everything
-module.exports = XHR; 
+module.exports = XHR;
