@@ -312,7 +312,6 @@ function handleError(xhr, error, extraParams) {
     result.status = xhr.status;
     result.error = error.error;
 
-    Ti.API.info('Ti.XHR :: 317 :: extraParams.parseJSON:', extraParams.parseJSON);
     // Parse error result body
     try {
         if (extraParams.returnXML && xhr.responseXML) {
