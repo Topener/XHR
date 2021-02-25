@@ -81,7 +81,6 @@ XHR.prototype.POST = function(e) {
     // When there was an error
     xhr.onerror = function(err) {
         // Check the status of this
-        Ti.API.info('Ti.XHR :: 84');
         onError(handleError(xhr, err, extraParams));
     };
 
@@ -319,11 +318,9 @@ function handleError(xhr, error, extraParams) {
         if (extraParams.returnXML && xhr.responseXML) {
             result.data = xhr.responseXML;
         } else {
-            Ti.API.info('Ti.XHR :: 322');
             result.data = (extraParams.parseJSON) ? JSON.parse(xhr.responseText) : xhr.responseText;
         }
     } catch (e) {
-        Ti.API.info('Ti.XHR :: 326');
         result.data = xhr.responseData;
     }
     return result;
