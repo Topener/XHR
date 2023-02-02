@@ -88,7 +88,7 @@ XHR.prototype.POST = function(e) {
 
         // When there was an error
         xhr.onerror = function(err) {
-            let error = handleError(xhr, error);
+            let error = handleError(xhr, err);
             onError(error);
             if (extraParams.promise) reject(error);
         };
